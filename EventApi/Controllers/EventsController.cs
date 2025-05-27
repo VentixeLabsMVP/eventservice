@@ -21,12 +21,9 @@ public class EventsController(EventServices eventService) : ControllerBase
             return NotFound();
         return Ok(result); // ok(return) method in controllerBase. is a part of Iactionresult
     }
-
-
-
-    [HttpPost("create")]
-    public async Task<IActionResult> Test()
+    [HttpGet("/")]
+    public IActionResult RedirectToEvent()
     {
-        throw new NotImplementedException();
+        return Redirect("/api/event");
     }
 }
