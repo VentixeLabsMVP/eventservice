@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<EventDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection")));
 
@@ -20,7 +21,6 @@ builder.Services.AddCors(x =>
     });
 
 });
-builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
@@ -28,7 +28,7 @@ app.MapOpenApi();
 app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

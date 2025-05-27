@@ -2,7 +2,7 @@
 
 namespace EventApi.Data
 {
-    public abstract class EventRepos(EventDbContext context)
+    public  class EventRepos(EventDbContext context)
     {
         private readonly EventDbContext _context = context;
     

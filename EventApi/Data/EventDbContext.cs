@@ -9,12 +9,13 @@ namespace EventApi.Data
     // : DbContext, generate const with options
     // add to primary const
     // define tables with DbSet<>
-    public class EventDbContext(DbContextOptions<EventDbContext> options) : DbContext(options)
+    public class EventDbContext : DbContext
     {
-        public DbSet<EventEntity> Events { get; set; };
+        public EventDbContext(DbContextOptions<EventDbContext> options) : base(options) { }
 
+        public DbSet<EventEntity> Events { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
@@ -27,7 +28,7 @@ namespace EventApi.Data
                     Description = "crying in money",
                     Price = 40
                 }
-                );
+            );
         }
     }
 
