@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EventApi.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/event")]
 [ApiController]
 public class EventsController(EventServices eventService) : ControllerBase
 {
