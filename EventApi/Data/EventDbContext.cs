@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 
@@ -20,7 +21,10 @@ namespace EventApi.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<EventEntity>().HasData(
-                new EventEntity { Id = 1, EventName = "Fredriks Event", Description = "crying in frontend", Price = 20 },
+                new EventEntity { Id = 1, 
+                    EventName = "Fredriks Event", 
+                    Description = "crying in frontend", 
+                    Price = 20 },
                 new EventEntity
                 {
                     Id = 2,
@@ -36,7 +40,23 @@ namespace EventApi.Data
     {
         public int Id { get; set; }
         public string EventName { get; set; } = null!;
+
+        [Column(TypeName = "date")]
+        public DateTime StartDate { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime EndDate { get; set; }
         public string Description { get; set; } = null!;
         public decimal Price { get; set; } = 0;
+
+
+        public int AddressId { get; set; } // foreign key
+        public Address Address { get; set; } = null!; // acces to address object properties
+    }
+
+    public class Address
+    {
+        public int Id { get; set; }
+        public string StreetName { get; set; } = null!;
+        public string City { get; set; } = null!;
     }
 }
