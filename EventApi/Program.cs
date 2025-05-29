@@ -10,6 +10,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<EventDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection")));
 
 builder.Services.AddScoped<EventServices>();
+builder.Services.AddScoped<AddressService>();
+builder.Services.AddScoped<AddressRepos>();
 builder.Services.AddScoped<EventRepos>();
 builder.Services.AddCors(x =>
 {

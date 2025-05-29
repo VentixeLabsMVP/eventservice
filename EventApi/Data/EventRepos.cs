@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EventApi.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace EventApi.Data
@@ -27,7 +28,9 @@ namespace EventApi.Data
         {
             try
             {
-                var result = await _context.Events.ToListAsync();
+                var result = await _context.Events
+                .Include(e => e.Address)
+                .ToListAsync();
                 return result;
             }
             catch (Exception ex)
@@ -42,8 +45,10 @@ namespace EventApi.Data
         {
             try
             {
-                var result = await _context.Events.FirstOrDefaultAsync(e => e.Id == id);
-                
+                var result = await _context.Events
+                .Include(e => e.Address)
+                .FirstOrDefaultAsync(e => e.Id == id);
+
                 if (result == null)
                     return null;
                 return result;

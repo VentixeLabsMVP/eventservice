@@ -1,9 +1,9 @@
 ﻿using EventApi.Data;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EventApi.Models;
+namespace EventApi.Entities;
 
-public class EventsDto
+public class EventEntity
 {
     public int Id { get; set; }
     public string EventName { get; set; } = null!;
@@ -15,6 +15,7 @@ public class EventsDto
     public string Description { get; set; } = null!;
     public decimal Price { get; set; } = 0;
 
-    public int? AddressId { get; set; } // foreign key to class Address. connects class Event to the id-row in the class Address
-    public AddressDto? Address { get; set; }// navigations property that allows Event to access the address object
+
+    public int? AddressId { get; set; } // foreign key
+    public Address? Address { get; set; } // acces to address object properties
 }

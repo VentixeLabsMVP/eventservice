@@ -1,4 +1,5 @@
 ﻿using EventApi.Data;
+using EventApi.Entities;
 using EventApi.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography.X509Certificates;
@@ -46,6 +47,7 @@ public class EventServices(EventRepos eventRepos)
                 City = result.Address.City
             }
         };
+    }
 
     public async Task<IEnumerable<EventsDto>> GetAllAsync()
     {
@@ -60,7 +62,7 @@ public class EventServices(EventRepos eventRepos)
             Description = e.Description,
             Price = e.Price,
             AddressId = e.AddressId,
-            Address = new AddressDto
+            Address = e.Address == null ? null : new AddressDto//need this to prevent null exception
             {
                 Id = e.Address.Id,
                 StreetName = e.Address.StreetName,
@@ -68,6 +70,7 @@ public class EventServices(EventRepos eventRepos)
             }
         });
     }
+    
 
     public async Task<EventsDto?> GetAsync(int id)
     {
@@ -84,13 +87,20 @@ public class EventServices(EventRepos eventRepos)
             EndDate = result.EndDate,
             Description = result.Description,
             Price = result.Price,
-            AddressId = result.AddressId,
-            Address = new AddressDto
-            {
-                Id = result.Address.Id,
-                StreetName = result.Address.StreetName,
-                City = result.Address.City
-            }
+            AddressId = result.AddressId ?? 1, // Om AddressId är nullable
+            Address = result.Address == null
+        ? new AddressDto
+        {
+            Id = 1,
+            StreetName = "Okänd gata",
+            City = "Okänd stad"
+        }
+        : new AddressDto
+        {
+            Id = result.Address.Id,
+            StreetName = result.Address.StreetName,
+            City = result.Address.City
+        }
         };
     }
         
@@ -124,7 +134,7 @@ public class EventServices(EventRepos eventRepos)
             Description = result.Description,
             Price = result.Price,
             AddressId = result.AddressId,
-            Address = new AddressDto
+            Address = result.Address == null ? null : new AddressDto
             {
                 Id = result.Address.Id,
                 StreetName = result.Address.StreetName,
