@@ -58,7 +58,7 @@ public class EventsController(EventServices eventService, AddressService address
         if (id != dto.Id)
             return BadRequest("ID mismatch.");
 
-        // 🔁 Uppdatera Address först
+
         if (dto.Address != null)
         {
             var updatedAddress = await _addressService.UpdateAsync(dto.Address);
